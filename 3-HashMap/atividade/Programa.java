@@ -4,15 +4,14 @@ import java.util.HashMap;
 
 public class Programa{
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    static HashMap<String, Aeroporto> aeroportos = new HashMap<String, Aeroporto>(); //criando o Hash
     public static void main(String[] args) throws Exception{
-        Programa pg = new Programa();
-        
-        HashMap<String, Aeroporto> aeroportos = new HashMap<String, Aeroporto>();
+        Programa pg = new Programa(); //usado para chamar a função(método) "menu" 
 
-        pg.menu();
+        pg.menu(); //chamando o método menu
     }
 
-    private void menu() throws Exception{
+    public void menu() throws Exception{
         String opc;
         do{
             System.out.println("[1]. Cadastrar aeroporto.");
@@ -47,7 +46,7 @@ public class Programa{
         String sigla;
         String opc = "";
 
-        try{
+        try{ //tenta executar os comandos de cadastro
             do{
                 Aeroporto aero = new Aeroporto();
 
@@ -60,16 +59,31 @@ public class Programa{
                 aero.setCidade(cidade);
 
                 System.out.println("Altitude:");
-                //altitude = Programa.reader.readLine();
-                //aero.setAltitude(altitude);
+                altitude = Double.valueOf(Programa.reader.readLine());
+                aero.setAltitude(altitude);
 
                 System.out.println("Sigla do estado:");
                 sigla = Programa.reader.readLine();
-                
 
-            }while(!opc.equals("N") || opc == null);
-        }catch(Exception e){
+                Programa.aeroportos.put(sigla, aero); //colocando 
 
+                System.out.println("");
+                System.out.println("Deseja cadastarar outro aeroporto? [S/N]");
+                opc = Programa.reader.readLine().toUpperCase();
+                if(opc.equals("N")){
+                    System.out.println("");
+                    System.out.println("Voltando ao menu...");
+                    System.out.println("");
+                }else if(opc != "S"){
+                    System.out.println("");
+                    System.out.println("Opção inválida!");
+                    System.out.println("Use S ou N...");
+                    System.out.println("");
+                }
+
+            }while(!opc.equals("N") || opc != "S");
+        }catch(Exception e){ //caso não consiga
+            System.out.println(e); //mostra o erro no terminal(tela)
         }
     }
 }
