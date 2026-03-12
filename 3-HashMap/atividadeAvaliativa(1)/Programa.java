@@ -4,9 +4,9 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class Programa{
-    static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    static HashMap<String, Aeroporto> aeroportos = new HashMap<String, Aeroporto>(); //criando o Hash de forma estática 
-    // --> não será preciso criar uma nova instância toda vez que precisar chamá-lo
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    HashMap<String, Aeroporto> aeroportos = new HashMap<String, Aeroporto>(); //criando o Hash de forma estática 
+                                                                                    // --> não será preciso criar uma nova instância toda vez que precisar chamá-lo
     public static void main(String[] args) throws Exception{
         Programa pg = new Programa(); //usado para chamar a função(método) "menu" 
         
@@ -25,7 +25,7 @@ public class Programa{
             System.out.println("[0]. Sair.");
             System.out.println("");
             System.out.println("Selecione uma opção:");
-            opc = Programa.reader.readLine();
+            opc = this.reader.readLine();
 
             switch(opc){
                 case "1":
@@ -80,7 +80,7 @@ public class Programa{
                                      //executa os seguintes comandos:
                 System.out.println("");
                 System.out.println("Sigla do aeroporto:");
-                sigla = Programa.reader.readLine();
+                sigla = this.reader.readLine();
 
                 if(sigla.equals("")){
                     System.out.println("");
@@ -92,7 +92,7 @@ public class Programa{
                                     //executa os seguintes comandos:
                 System.out.println("");
                 System.out.println("Nome do aeroporto:");
-                nome = Programa.reader.readLine();
+                nome = this.reader.readLine();
 
                 if(nome.equals("")){
                     System.out.println("");
@@ -105,7 +105,7 @@ public class Programa{
                                      //executa os seguintes comandos:
                 System.out.println("");
                 System.out.println("Cidade:");
-                cidade = Programa.reader.readLine();
+                cidade = this.reader.readLine();
 
                 if(cidade.equals("")){
                     System.out.println("");
@@ -118,7 +118,7 @@ public class Programa{
                                        //executa os seguintes comandos:
                 System.out.println("");
                 System.out.println("Altitude:");
-                altitude = Programa.reader.readLine();
+                altitude = this.reader.readLine();
 
                 if(altitude.equals("")){
                     System.out.println("");;
@@ -129,8 +129,8 @@ public class Programa{
                                                        //e seta a altitude da classe Aeroporto
 
             aeroportos.put(sigla, aero); //coloca as informações no HashMap
-        }catch(Exception e){ //caso não consiga
-            System.out.println(e); //mostra o erro no terminal(tela)
+        }catch(IOException ioE){ //caso não consiga
+            System.out.println(ioE); //mostra o erro no terminal(tela)
         }
     }
 
@@ -150,7 +150,7 @@ public class Programa{
             while(sigla.equals("")){ //enquanto receber uma string vazia
                                     // executa os seguintes comandos
                 System.out.println("Sigla do aeroporto que deseja remover:");
-                sigla = Programa.reader.readLine();
+                sigla = this.reader.readLine();
             }
 
             if(!aeroportos.containsKey(sigla)){
@@ -177,7 +177,7 @@ public class Programa{
         try{ //tenta executar os seguintes comandos:
             while(sigla.equals("")){ //executa os comandos abaixo enquanto receber uma string vazia
                 System.out.println("Sigla do aeroporto que deseja procurar:");
-                sigla = Programa.reader.readLine();
+                sigla = this.reader.readLine();
 
                 if(sigla.equals("")){
                     System.out.println("");
