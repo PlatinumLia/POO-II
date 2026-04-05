@@ -14,5 +14,5 @@ CREATE TABLE tb_vendedor(
     nome VARCHAR(50) NOT NULL,
     cpf VARCHAR(13) NOT NULL,
     telefone VARCHAR(12) NOT NULL,
-    estadoCivil VARCHAR(10) NOT NULL CHECK('casado', 'solteiro', 'divorciado')
+    estadoCivil VARCHAR(13) NOT NULL
 );

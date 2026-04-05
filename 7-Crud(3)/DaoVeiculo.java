@@ -65,7 +65,11 @@ public class DaoVeiculo{
         try{
             this.conectar();
             
-            String comando = "INSERT INTO tb_veiculos VALUES(" + "NULL, '" + vei.getMarca() + "', '" + vei.getModelo() + "', '" + vei.getChassi() + "', " + vei.getAno() + ");";
+            String comando = "INSERT INTO tb_veiculos VALUES(" + "NULL, '" 
+            + vei.getMarca() + "', '" 
+            + vei.getModelo() + "', '" 
+            + vei.getChassi() + "', " 
+            + vei.getAno() + ");";
 
             // System.out.println(comando);
             stm.executeUpdate(comando);
