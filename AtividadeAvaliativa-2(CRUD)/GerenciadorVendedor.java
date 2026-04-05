@@ -39,6 +39,10 @@ public class GerenciadorVendedor{
                     this.consultarVendedorEspecifico();
                     break;
 
+                case 3:
+                    this.alterarDados();
+                    break;
+
                 case 4:
                     this.excluir();
                     break;
@@ -46,6 +50,11 @@ public class GerenciadorVendedor{
                 case 5:
                     this.listarTodos();
                     break;
+            
+                default:
+                    System.out.println("");
+                    System.out.println("Opção inválida!");
+                    System.out.println("");
             }
         }
     }
@@ -167,7 +176,122 @@ public class GerenciadorVendedor{
             System.out.println("Código do vendedor:");
             int codigo = Integer.parseInt(scanner.nextLine());
             Vendedor vend = daoVendedor.consultarVendedorEspecifico(codigo);
+
+            if(vend != null){
+                System.out.println("Dados do vendedor:\n");
+                System.out.println("Código: " + vend.getCodigo());
+                System.out.println("Nome: " + vend.getNome());
+                System.out.println("CPF: " + vend.getCpf());
+                System.out.println("Telefone: " + vend.getTelefone());
+                System.out.println("Estado civil: " + vend.getEstadoCivil());
+                System.out.println("");
+            }else{
+                System.out.println("");
+                System.out.println("Não encontrado!");
+                System.out.println("Código inválido ou incorreto.");
+                System.out.println("");
+            }
         }catch(Exception e){
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    private void alterarDados(){
+        System.out.println("--- ALTERAR DADOS DE VENDEDOR ---");
+        System.out.println("");
+
+        System.out.println("Código do vendedor:");
+        int codigo = Integer.parseInt(scanner.nextLine());
+        Vendedor vend = daoVendedor.consultarVendedorEspecifico(codigo);
+
+        if(vend != null){
+            System.out.println("Dados do vendedor:\n");
+            System.out.println("Código: " + vend.getCodigo());
+            System.out.println("Nome: " + vend.getNome());
+            System.out.println("CPF: " + vend.getCpf());
+            System.out.println("Telefone: " + vend.getTelefone());
+            System.out.println("Estado civil: " + vend.getEstadoCivil());
+
+            menuAlterarDados(vend);
+        }else{
+            System.out.println("");
+            System.out.println("Vendedor(a) não encontrado.");
+            System.out.println("");
+        }
+    }
+
+    private void menuAlterarDados(Vendedor vend){
+        System.out.println("--- MENU DE ALTERAÇÃO DOS DADOS ---\n");
+        System.out.println("[1]. Alterar nome");
+        System.out.println("[2]. Alterar CPF");
+        System.out.println("[3]. Alterar telefone");
+        System.out.println("[4]. Alterar estado civil");
+        System.out.println("\nOpção desejada:");
+        int opc = Integer.parseInt(scanner.nextLine());
+        String nome = "";
+        String cpf = "";
+        String telefone = "";
+        String estadoCivil = "";
+
+        switch(opc){
+            case 1:
+                System.out.println("Digite o novo nome:");
+                nome = scanner.nextLine();
+
+                if(!nome.isEmpty()){
+                    vend.setNome(nome);
+                }
+            break;
+
+            case 2:
+                System.out.println("Digite o novo CPF:");
+                cpf = scanner.nextLine();
+                
+                if(!cpf.isEmpty()){
+                    vend.setCpf(cpf);
+                }    
+            break;
+                
+            case 3:
+                System.out.println("Digite o novo telefone:");
+                telefone = scanner.nextLine();
+
+                if(!telefone.isEmpty()){
+                    vend.setTelefone(telefone);
+                }
+            break;
+
+            case 4:
+                String opcao = "";
+                while(!estadoCivil.equals("A") || !estadoCivil.equals("B") || !estadoCivil.equals("C")){
+                    System.out.println("Selecione o estado civil do(a) vendedor(a):\n");
+                    System.out.println("[A]. Solteiro(a)");
+                    System.out.println("[B]. Casado(a)");
+                    System.out.println("[C]. Divorciado(a)");
+                    opcao = scanner.nextLine().toUpperCase(); 
+                    
+                    if(opcao.equals("A")){
+                        estadoCivil = "Solteiro(a)";
+                        vend.setEstadoCivil(estadoCivil);
+                    }else if(opcao.equals("B")){
+                        estadoCivil = "Casado(a)";
+                        vend.setEstadoCivil(estadoCivil);
+                    }else if(opcao.equals("C")){
+                        estadoCivil = "Divorciado(a)";
+                    }else{
+                        System.out.println("");
+                        System.out.println("Opção inválida!");
+                        System.out.println("Tente novamente.");
+                        System.out.println("");
+                    }
+                }
+            break;
+        
+            default:
+                System.out.println("");
+                System.out.println("Opção inválida.");
+                System.out.println("");
+            break;
         }
     }
 }

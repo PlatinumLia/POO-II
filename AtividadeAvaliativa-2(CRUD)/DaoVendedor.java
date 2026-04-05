@@ -1,6 +1,5 @@
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -95,7 +94,7 @@ public class DaoVendedor{
         return listaVendedores;
     }
 
-    public Vendedor consultaVendedorEspecifico(int codigo){
+    public Vendedor consultarVendedorEspecifico(int codigo){
         Vendedor vend = null;
 
         try{
