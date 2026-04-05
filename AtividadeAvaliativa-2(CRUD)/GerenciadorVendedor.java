@@ -110,7 +110,7 @@ public class GerenciadorVendedor{
         }
 
         String opc = "";
-        while(!estadoCivil.equals("A") || !estadoCivil.equals("B") || !estadoCivil.equals("C")){
+        while(!estadoCivil.equals("A") && !estadoCivil.equals("B") && !estadoCivil.equals("C")){
             System.out.println("Selecione o estado civil do(a) vendedor(a):\n");
             System.out.println("[A]. Solteiro(a)");
             System.out.println("[B]. Casado(a)");
@@ -120,11 +120,15 @@ public class GerenciadorVendedor{
             if(opc.equals("A")){
                 estadoCivil = "Solteiro(a)";
                 vend.setEstadoCivil(estadoCivil);
+                break;
             }else if(opc.equals("B")){
                 estadoCivil = "Casado(a)";
                 vend.setEstadoCivil(estadoCivil);
+                break;
             }else if(opc.equals("C")){
                 estadoCivil = "Divorciado(a)";
+                vend.setEstadoCivil(estadoCivil);
+                break;
             }else{
                 System.out.println("");
                 System.out.println("Opção inválida!");
@@ -263,7 +267,7 @@ public class GerenciadorVendedor{
 
             case 4:
                 String opcao = "";
-                while(!estadoCivil.equals("A") || !estadoCivil.equals("B") || !estadoCivil.equals("C")){
+                while(!estadoCivil.equals("A") && !estadoCivil.equals("B") && !estadoCivil.equals("C")){
                     System.out.println("Selecione o estado civil do(a) vendedor(a):\n");
                     System.out.println("[A]. Solteiro(a)");
                     System.out.println("[B]. Casado(a)");
