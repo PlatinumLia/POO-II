@@ -62,7 +62,6 @@ public class GerenciadorVendedor{
     private void cadastrar(){
         Vendedor vend = new Vendedor();
         String telefone = "";
-        String estadoCivil = "";
         
         System.out.println("\n---------------------------");
         System.out.println("CADASTRO DE VENDEDOR(A)");
@@ -110,6 +109,7 @@ public class GerenciadorVendedor{
         }
 
         String opc = "";
+        String estadoCivil = "";
         while(!estadoCivil.equals("A") && !estadoCivil.equals("B") && !estadoCivil.equals("C")){
             System.out.println("Estados civis disponíveis:");
             System.out.println("[A]. Solteiro(a)");
@@ -122,27 +122,28 @@ public class GerenciadorVendedor{
             if(opc.equals("A")){
                 estadoCivil = "Solteiro(a)";
                 vend.setEstadoCivil(estadoCivil);
+                break;
             }else if(opc.equals("B")){
                 estadoCivil = "Casado(a)";
                 vend.setEstadoCivil(estadoCivil);
+                break;
             }else if(opc.equals("C")){
                 estadoCivil = "Divorciado(a)";
                 vend.setEstadoCivil(estadoCivil);
+                break;
             }else{
                 System.out.println("");
                 System.out.println("Opção inválida!");
                 System.out.println("Tente novamente.");
                 System.out.println("");
             }
+        }
 
-            boolean inserido = daoVendedor.inserir(vend);
-            if(inserido){
-                System.out.println("");
-                System.out.println("Dados inseridos com sucesso");
-                System.out.println("");
-
-                break;
-            }
+        boolean inserido = daoVendedor.inserir(vend);
+        if(inserido){
+            System.out.println("");
+            System.out.println("Dados inseridos com sucesso");
+            System.out.println("");
         }
     }
 
