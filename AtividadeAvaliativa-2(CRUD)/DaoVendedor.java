@@ -35,7 +35,7 @@ public class DaoVendedor{
             + vend.getNome() + "', '" 
             + vend.getCpf() + "', '"
             + vend.getTelefone() + "', '"
-            + vend.getEstadoCivil() + ");";
+            + vend.getEstadoCivil() + "');";
             
             stm.executeUpdate(comando);
             inserido = true;
@@ -72,7 +72,7 @@ public class DaoVendedor{
         try {
             this.conectar();
 
-            ResultSet rs = stm.executeQuery("SELECT * FROM tb_vendedores");
+            ResultSet rs = stm.executeQuery("SELECT * FROM tb_vendedor");
 
             while(rs.next()){
                 Vendedor vend = new Vendedor();
@@ -100,7 +100,7 @@ public class DaoVendedor{
         try{
             this.conectar();
 
-            ResultSet rs = stm.executeQuery("SELECT * FROM tb_vendedores WHERE codigo = " + codigo + ";");
+            ResultSet rs = stm.executeQuery("SELECT * FROM tb_vendedor WHERE codigo = " + codigo + ";");
 
             while(rs.next()){
                 vend = new Vendedor();
@@ -118,5 +118,30 @@ public class DaoVendedor{
         }
 
         return vend;
+    }
+
+    public int alterar(Vendedor vend){
+        int qtde = 0;
+
+        try{
+            this.conectar();
+
+            String command = "UPDATE tb_vendedor SET " 
+            + "nome = '" + vend.getNome() + "', "
+            + "cpf = '" + vend.getCpf() + "', "
+            + "telefone = '" + vend.getTelefone() + "', "
+            + "estadoCivil = '" + vend.getEstadoCivil() + "' "
+            + "WHERE codigo = " + vend.getCodigo() + ";";
+
+            stm.executeUpdate(command);
+            qtde = stm.getUpdateCount();
+        }catch(Exception e){
+            System.out.println("Erro ao inserir registro.");
+            System.out.println("Erro: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+
+        return qtde;
     }
 }

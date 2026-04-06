@@ -61,15 +61,14 @@ public class GerenciadorVendedor{
 
     private void cadastrar(){
         Vendedor vend = new Vendedor();
-        String nome = "";
-        String cpf = "";
         String telefone = "";
         String estadoCivil = "";
-
+        
         System.out.println("\n---------------------------");
         System.out.println("CADASTRO DE VENDEDOR(A)");
         System.out.println("---------------------------\n");
-
+        
+        String nome = "";
         while(nome.equals("")){
             System.out.println("Nome:");
             nome = scanner.nextLine();
@@ -83,6 +82,7 @@ public class GerenciadorVendedor{
             }
         }
 
+        String cpf = "";
         while(cpf.equals("")){
             System.out.println("CPF:");
             cpf = scanner.nextLine();
@@ -111,29 +111,37 @@ public class GerenciadorVendedor{
 
         String opc = "";
         while(!estadoCivil.equals("A") && !estadoCivil.equals("B") && !estadoCivil.equals("C")){
-            System.out.println("Selecione o estado civil do(a) vendedor(a):\n");
+            System.out.println("Estados civis disponíveis:");
             System.out.println("[A]. Solteiro(a)");
             System.out.println("[B]. Casado(a)");
             System.out.println("[C]. Divorciado(a)");
-            opc = scanner.nextLine().toUpperCase(); 
+            System.out.println("");
+            System.out.println("Selecione o estado civil do(a) vendedor(a):");
+            opc = scanner.nextLine().toUpperCase();     
             
             if(opc.equals("A")){
                 estadoCivil = "Solteiro(a)";
                 vend.setEstadoCivil(estadoCivil);
-                break;
             }else if(opc.equals("B")){
                 estadoCivil = "Casado(a)";
                 vend.setEstadoCivil(estadoCivil);
-                break;
             }else if(opc.equals("C")){
                 estadoCivil = "Divorciado(a)";
                 vend.setEstadoCivil(estadoCivil);
-                break;
             }else{
                 System.out.println("");
                 System.out.println("Opção inválida!");
                 System.out.println("Tente novamente.");
                 System.out.println("");
+            }
+
+            boolean inserido = daoVendedor.inserir(vend);
+            if(inserido){
+                System.out.println("");
+                System.out.println("Dados inseridos com sucesso");
+                System.out.println("");
+
+                break;
             }
         }
     }
@@ -147,12 +155,18 @@ public class GerenciadorVendedor{
         System.out.println("");
 
         try{
-            System.out.println("Código do verndedor que deseja excluir:");
+            System.out.println("Código do(a) vendedor(a) que deseja excluir:");
             cod = Integer.parseInt(scanner.nextLine());
 
             qtde = daoVendedor.excluir(cod);
             if(qtde > 0){
-
+                System.out.println("");
+                System.out.println("Excluído com sucesso!");
+                System.out.println("");
+            }else{
+                System.out.println("");
+                System.out.println("Não foi possível excluir.");
+                System.out.println("");
             }
         }catch(Exception e){
             System.out.println("Erro: " + e.getMessage());
@@ -182,7 +196,7 @@ public class GerenciadorVendedor{
             Vendedor vend = daoVendedor.consultarVendedorEspecifico(codigo);
 
             if(vend != null){
-                System.out.println("Dados do vendedor:\n");
+                System.out.println("\nDados do vendedor:\n");
                 System.out.println("Código: " + vend.getCodigo());
                 System.out.println("Nome: " + vend.getNome());
                 System.out.println("CPF: " + vend.getCpf());
@@ -209,12 +223,13 @@ public class GerenciadorVendedor{
         Vendedor vend = daoVendedor.consultarVendedorEspecifico(codigo);
 
         if(vend != null){
-            System.out.println("Dados do vendedor:\n");
+            System.out.println("\nDados do vendedor:\n");
             System.out.println("Código: " + vend.getCodigo());
             System.out.println("Nome: " + vend.getNome());
             System.out.println("CPF: " + vend.getCpf());
             System.out.println("Telefone: " + vend.getTelefone());
             System.out.println("Estado civil: " + vend.getEstadoCivil());
+            System.out.println("");
 
             menuAlterarDados(vend);
         }else{
@@ -239,6 +254,7 @@ public class GerenciadorVendedor{
 
         switch(opc){
             case 1:
+                System.out.println("");
                 System.out.println("Digite o novo nome:");
                 nome = scanner.nextLine();
 
@@ -248,6 +264,7 @@ public class GerenciadorVendedor{
             break;
 
             case 2:
+                System.out.println("");
                 System.out.println("Digite o novo CPF:");
                 cpf = scanner.nextLine();
                 
@@ -257,6 +274,7 @@ public class GerenciadorVendedor{
             break;
                 
             case 3:
+                System.out.println("");
                 System.out.println("Digite o novo telefone:");
                 telefone = scanner.nextLine();
 
@@ -268,20 +286,27 @@ public class GerenciadorVendedor{
             case 4:
                 String opcao = "";
                 while(!estadoCivil.equals("A") && !estadoCivil.equals("B") && !estadoCivil.equals("C")){
-                    System.out.println("Selecione o estado civil do(a) vendedor(a):\n");
+                    System.out.println("");
+                    System.out.println("Estados civis disponíveis:");
                     System.out.println("[A]. Solteiro(a)");
                     System.out.println("[B]. Casado(a)");
                     System.out.println("[C]. Divorciado(a)");
+                    System.out.println("");
+                    System.out.println("Selecione o estado civil do(a) vendedor(a):");
                     opcao = scanner.nextLine().toUpperCase(); 
                     
                     if(opcao.equals("A")){
                         estadoCivil = "Solteiro(a)";
                         vend.setEstadoCivil(estadoCivil);
+                        break;
                     }else if(opcao.equals("B")){
                         estadoCivil = "Casado(a)";
                         vend.setEstadoCivil(estadoCivil);
+                        break;
                     }else if(opcao.equals("C")){
                         estadoCivil = "Divorciado(a)";
+                        vend.setEstadoCivil(estadoCivil);
+                        break;
                     }else{
                         System.out.println("");
                         System.out.println("Opção inválida!");
@@ -296,6 +321,18 @@ public class GerenciadorVendedor{
                 System.out.println("Opção inválida.");
                 System.out.println("");
             break;
+
+        }
+        
+        int qtde = daoVendedor.alterar(vend);
+        if(qtde > 0){
+            System.out.println("");
+            System.out.println("Alterado com sucesso");
+            System.out.println("");
+        }else{
+            System.out.println("");
+            System.out.println("Não foi possível atualizar.");
+            System.out.println("");
         }
     }
 }
