@@ -4,11 +4,17 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import model.Livro;
+import model.DaoLivro;
+
 /**
  *
  * @author aluno.lab
  */
 public class LivroView extends javax.swing.JFrame {
+    Livro livro;
+    DaoLivro daoLivro;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LivroView.class.getName());
 
@@ -17,8 +23,14 @@ public class LivroView extends javax.swing.JFrame {
      */
     public LivroView() {
         initComponents();
+        daoLivro = new DaoLivro();
+        this.atualizarTabelaLivros();
     }
 
+    public void atualizarTabelaLivros(){ 
+        jTableLivro.setModel(new LivroTableModel(daoLivro.listarTodos())); 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,21 +40,170 @@ public class LivroView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        labelTitulo = new javax.swing.JLabel();
+        labelCodigo = new javax.swing.JLabel();
+        tfCodigo = new javax.swing.JTextField();
+        labelNome = new javax.swing.JLabel();
+        tfNome = new javax.swing.JTextField();
+        labelAutor = new javax.swing.JLabel();
+        tfAutor = new javax.swing.JTextField();
+        labelQtdPaginas = new javax.swing.JLabel();
+        tfQtdPaginas = new javax.swing.JTextField();
+        labelAnoLancamento = new javax.swing.JLabel();
+        tfAnoLancamento = new javax.swing.JTextField();
+        tfGenero = new javax.swing.JTextField();
+        labelGenero = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableLivro = new javax.swing.JTable();
+        btnSalvar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        labelTitulo.setFont(new java.awt.Font("Liberation Sans", 1, 36)); // NOI18N
+        labelTitulo.setText("Biblioteca");
+
+        labelCodigo.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelCodigo.setText("Código:");
+
+        tfCodigo.setEnabled(false);
+
+        labelNome.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelNome.setText("Nome:");
+        labelNome.setToolTipText("");
+
+        labelAutor.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelAutor.setText("Autor:");
+
+        labelQtdPaginas.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelQtdPaginas.setText("Páginas:");
+
+        labelAnoLancamento.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelAnoLancamento.setText("Lançamento:");
+
+        labelGenero.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelGenero.setText("Gênero:");
+
+        jTableLivro.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTableLivro);
+
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(this::btnSalvarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 789, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelCodigo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfNome)
+                            .addComponent(tfAutor)
+                            .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelAnoLancamento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfAnoLancamento))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelQtdPaginas)
+                                    .addComponent(labelGenero))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfQtdPaginas)
+                                    .addComponent(tfGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(132, 132, 132))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(labelTitulo)
+                        .addGap(277, 277, 277))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 632, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCodigo)
+                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelAnoLancamento)
+                    .addComponent(tfAnoLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNome)
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelQtdPaginas)
+                    .addComponent(tfQtdPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelAutor)
+                    .addComponent(tfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelGenero))
+                .addGap(18, 18, 18)
+                .addComponent(btnSalvar)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        //exibe uma msg na tela avisando que há campos não preenchidos
+        if(tfNome.getText(). equals("") || tfAutor.getText().equals("") ||
+           tfQtdPaginas.getText().equals("") || tfAnoLancamento.getText().equals("") ||
+           tfGenero.getText().equals("")){ 
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos", "AVISO", JOptionPane.WARNING_MESSAGE);
+        }else{
+            // quando o botão for clicado e todos os  campos estão preenchidos, 
+            // define as as informações e salva no banco
+            
+            livro = new Livro();
+            
+            livro.setNome(tfNome.getText());
+            livro.setAutor(tfAutor.getText());
+            livro.setQtdPaginas(Integer.parseInt(tfQtdPaginas.getText()));
+            livro.setAnoLancamento(Integer.parseInt(tfAnoLancamento.getText()));
+            livro.setGenero(tfGenero.getText());
+            
+            daoLivro.inserir(livro);
+            atualizarTabelaLivros();
+            
+            //if(tfCodigo.getText().equals("")){ //verifica se jã existe um id
+                 //caso não haja, insere uma nova instância
+            //}else{
+                // TO DO: criar opção para alterar um registro
+            //}
+        }
+        
+         
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +231,21 @@ public class LivroView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableLivro;
+    private javax.swing.JLabel labelAnoLancamento;
+    private javax.swing.JLabel labelAutor;
+    private javax.swing.JLabel labelCodigo;
+    private javax.swing.JLabel labelGenero;
+    private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelQtdPaginas;
+    private javax.swing.JLabel labelTitulo;
+    private javax.swing.JTextField tfAnoLancamento;
+    private javax.swing.JTextField tfAutor;
+    private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfGenero;
+    private javax.swing.JTextField tfNome;
+    private javax.swing.JTextField tfQtdPaginas;
     // End of variables declaration//GEN-END:variables
 }
