@@ -95,4 +95,50 @@ public class DaoLivro {
         
         return results;
     }
+    
+    public Livro consultar(int codigo){
+        Livro liv = null;
+        
+        try{
+            this.conectar();
+            
+            ResultSet rs = stm.executeQuery("SELECT * FROM tb_livros WHERE codigo = " + codigo + ";");
+            
+            while(rs.next()){
+                liv = new Livro();
+                
+                liv.setId(rs.getInt("codigo"));
+                liv.setNome(rs.getString("nome"));
+                liv.setAutor(rs.getString("autor"));
+                liv.setQtdPaginas(rs.getInt("qtd_paginas"));
+                liv.setAnoLancamento(rs.getInt("ano_lancamento"));
+                liv.setGenero(rs.getString("genero"));
+            }
+        }catch(SQLException e){
+            System.out.println("Erro: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        return liv;
+    }
+    
+    public int excluir(int codigo){
+        int qtde = 0;
+        
+        try{
+            this.conectar();
+            
+            String comando = "DELETE FROM tb_livros WHERE codigo = " + codigo + ";";
+            
+            stm.executeUpdate(comando);
+            qtde = stm.getUpdateCount();
+        }catch(SQLException e){
+            System.out.println("Erro: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        return qtde;
+    }
 }
