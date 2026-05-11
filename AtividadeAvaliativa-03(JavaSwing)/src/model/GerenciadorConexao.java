@@ -23,7 +23,7 @@ public class GerenciadorConexao {
         
         String url = "jdbc:mysql://127.0.0.1/db_livraria";
         String user = "root";
-        String senha = "bancodedados";
+        String senha = "suseTsuki90@";
     
         conexao = DriverManager.getConnection(url, user, senha);
 

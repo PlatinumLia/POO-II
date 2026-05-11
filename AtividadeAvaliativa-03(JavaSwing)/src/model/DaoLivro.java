@@ -51,6 +51,7 @@ public class DaoLivro {
                     + livro.getAnoLancamento() + "', '" 
                     + livro.getGenero() + "');";
             
+            System.out.println(comando);
             stm.executeUpdate(comando);
             resultado = true;
         }catch(SQLException e){ //caso não consiga conectar ou dê erro ao inserir, 
@@ -131,9 +132,37 @@ public class DaoLivro {
             
             String comando = "DELETE FROM tb_livros WHERE codigo = " + codigo + ";";
             
+            System.out.println(comando);
             stm.executeUpdate(comando);
             qtde = stm.getUpdateCount();
         }catch(SQLException e){
+            System.out.println("Erro: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        return qtde;
+    }
+    
+    public int alterar(Livro liv){
+        int qtde = 0;
+        
+        try{
+            this.conectar();
+            
+            String comando = "UPDATE tb_livros SET "
+                           + "nome = '" + liv.getNome() + "', "
+                           + "autor = '" + liv.getAutor() + "', "
+                           + "qtd_paginas = " + liv.getQtdPaginas() + ", "
+                           + "ano_lancamento = " + liv.getAnoLancamento() + ", "
+                           + "genero = '" + liv.getGenero() + "' "
+                           + "WHERE codigo = " + liv.getId() + ";";
+            
+            System.out.println(comando);
+            stm.executeUpdate(comando);
+            qtde = stm.getUpdateCount();
+        }catch(SQLException e){
+            System.out.println("Erro ao alterar registro.");
             System.out.println("Erro: " + e.getMessage());
         }finally{
             this.desconectar();

@@ -217,14 +217,13 @@ public class LivroView extends javax.swing.JFrame {
             livro.setAnoLancamento(Integer.parseInt(tfAnoLancamento.getText()));
             livro.setGenero(tfGenero.getText());
             
-            daoLivro.inserir(livro);
-            
-            
-            //if(tfCodigo.getText().equals("")){ //verifica se jã existe um id
-                 //caso não haja, insere uma nova instância
-            //}else{
-                // TO DO: criar opção para alterar um registro
-            //}
+            if(tfCodigo.getText().equals("")){ //verifica se jã existe um id
+                //caso não haja, insere um novo registro
+                daoLivro.inserir(livro);
+            }else{
+                livro.setId(Integer.parseInt(tfCodigo.getText()));
+                daoLivro.alterar(livro);
+            }
             
             limparCampos();
             atualizarTabelaLivros();
