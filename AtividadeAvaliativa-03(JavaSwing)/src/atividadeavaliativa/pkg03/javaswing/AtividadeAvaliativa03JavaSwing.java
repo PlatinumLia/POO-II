@@ -22,9 +22,15 @@ public class AtividadeAvaliativa03JavaSwing {
         DaoLivro daoLivro = new DaoLivro();
         ArrayList<Livro> livros = daoLivro.listarTodos();
         
+        // verno terminal os dados que há no banco assim que a aplicação é executada
         for(Livro livro : livros){
             System.out.println(livro.getNome());
         }
+        
+        /* deixa a aparência mais moderna */
+        //com.formdev.flatlaf.FlatLightLaf.setup();    // Tema Claro
+        com.formdev.flatlaf.FlatDarkLaf.setup();     // Tema Escuro
+        
         
         new LivroView().setVisible(true);
     }   

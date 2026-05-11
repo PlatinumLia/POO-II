@@ -170,4 +170,41 @@ public class DaoLivro {
         
         return qtde;
     }
+    
+    public ArrayList<Livro> filtrar(String campo, String filtro){
+        ArrayList<Livro> results = new ArrayList<>();
+        
+        if(!campo.equals("genero") && !campo.equals("autor") && !campo.equals("nome")){
+            return results;
+        }
+        
+        try{
+            this.conectar();
+            
+            ResultSet rs = stm.executeQuery("SELECT * FROM tb_livros WHERE " 
+                                            + campo 
+                                            + " LIKE '%" + filtro + "%' "
+                                            + "ORDER BY codigo;");
+            
+            while(rs.next()){ //popular o arraylist com os dados recebidos
+                Livro liv = new Livro();
+                
+                liv.setId(rs.getInt("codigo"));
+                liv.setNome(rs.getString("nome"));
+                liv.setAutor(rs.getString("autor"));
+                liv.setQtdPaginas(rs.getInt("qtd_paginas"));
+                liv.setAnoLancamento(rs.getInt("ano_lancamento"));
+                liv.setGenero(rs.getString("genero"));
+                
+                results.add(liv);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro na consulta!");
+            System.out.println("Erro: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        return results;
+    }
 }

@@ -49,6 +49,7 @@ public class LivroView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bgFiltro = new javax.swing.ButtonGroup();
         labelTitulo = new javax.swing.JLabel();
         labelCodigo = new javax.swing.JLabel();
         tfCodigo = new javax.swing.JTextField();
@@ -66,6 +67,13 @@ public class LivroView extends javax.swing.JFrame {
         jTableLivro = new javax.swing.JTable();
         btnSalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        labelFiltro = new javax.swing.JLabel();
+        rbGenero = new javax.swing.JRadioButton();
+        rbAutor = new javax.swing.JRadioButton();
+        tfFiltro = new javax.swing.JTextField();
+        btnFiltro = new javax.swing.JButton();
+        btnListaTodos = new javax.swing.JButton();
+        rbTitulo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -118,14 +126,30 @@ public class LivroView extends javax.swing.JFrame {
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(this::btnExcluirActionPerformed);
 
+        labelFiltro.setFont(new java.awt.Font("Liberation Sans", 0, 18)); // NOI18N
+        labelFiltro.setText("Filtrar por:");
+
+        bgFiltro.add(rbGenero);
+        rbGenero.setText("Gênero");
+        rbGenero.setToolTipText("");
+
+        bgFiltro.add(rbAutor);
+        rbAutor.setText("Autor");
+
+        btnFiltro.setText("Filtrar");
+        btnFiltro.addActionListener(this::btnFiltroActionPerformed);
+
+        btnListaTodos.setText("Listar todos");
+        btnListaTodos.setToolTipText("");
+        btnListaTodos.addActionListener(this::btnListaTodosActionPerformed);
+
+        bgFiltro.add(rbTitulo);
+        rbTitulo.setText("Título");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,6 +185,25 @@ public class LivroView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(labelTitulo)
                         .addGap(257, 257, 257))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelFiltro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbGenero)
+                        .addGap(12, 12, 12)
+                        .addComponent(rbAutor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfFiltro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFiltro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnListaTodos))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +236,16 @@ public class LivroView extends javax.swing.JFrame {
                     .addComponent(btnExcluir))
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFiltro)
+                    .addComponent(rbGenero)
+                    .addComponent(rbAutor)
+                    .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFiltro)
+                    .addComponent(btnListaTodos)
+                    .addComponent(rbTitulo))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -270,6 +322,30 @@ public class LivroView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        // Quando o botão "filtrar" for clicado,
+        // define o campo o qual foi selecionado no radios button
+        // e filtra a lista  a partir disso
+        String campo = "";
+        
+        if(rbGenero.isSelected()){
+            campo = "genero";
+        }else if(rbAutor.isSelected()){
+            campo = "autor";
+        }else{
+            campo = "nome";
+        }
+        
+        jTableLivro.setModel(new LivroTableModel(daoLivro.filtrar(campo, tfFiltro.getText())));
+        limparCampos();
+    }//GEN-LAST:event_btnFiltroActionPerformed
+
+    private void btnListaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaTodosActionPerformed
+        limparCampos();
+        tfFiltro.setText("");
+        atualizarTabelaLivros();
+    }//GEN-LAST:event_btnListaTodosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -296,20 +372,28 @@ public class LivroView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgFiltro;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFiltro;
+    private javax.swing.JButton btnListaTodos;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableLivro;
     private javax.swing.JLabel labelAnoLancamento;
     private javax.swing.JLabel labelAutor;
     private javax.swing.JLabel labelCodigo;
+    private javax.swing.JLabel labelFiltro;
     private javax.swing.JLabel labelGenero;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelQtdPaginas;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JRadioButton rbAutor;
+    private javax.swing.JRadioButton rbGenero;
+    private javax.swing.JRadioButton rbTitulo;
     private javax.swing.JTextField tfAnoLancamento;
     private javax.swing.JTextField tfAutor;
     private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfFiltro;
     private javax.swing.JTextField tfGenero;
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfQtdPaginas;
