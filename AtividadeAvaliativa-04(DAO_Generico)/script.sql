@@ -1,19 +1,26 @@
--- Active: 1773959692019@@127.0.0.1@3306@demon_compendium
-CREATE DATABASE demon_compendium;
+-- Active: 1778338735100@@127.0.0.1@3306@db_compendium
+CREATE DATABASE db_compendium;
 
-CREATE TABLE demon(
-    id_demon INT(4) NOT NULL AUTO_INCREMENT,
+CREATE TABLE tb_demons(
+    id INT(4) NOT NULL AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,
     nivel INT NOT NULL,
-    raca VARCHAR(80) NOT NULL,
     fraqueza VARCHAR(80) NOT NULL,
-    PRIMARY KEY(id_demon)
+    PRIMARY KEY(id)
 );
 
-CREATE TABLE demon_user(
-    id_demon_user INT(4) NOT NULL AUTO_INCREMENT,
+CREATE TABLE tb_users(
+    id INT(4) NOT NULL AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,
-    tipo_invocacao VARCHAR(80) NOT NULL,
-    id_demonio INT NOT NULL REFERENCES demon(id_demon),
-    PRIMARY KEY(id_demon_user)
+    nivel INT NOT NULL,
+    invocacao VARCHAR(80) NOT NULL,
+    jogo VARCHAR(80) NOT NULL,
+    PRIMARY KEY(id)
 );
+
+/* Insert's para teste*/
+INSERT INTO tb_demons(nome, nivel, fraqueza) VALUES
+('Arsène', 75, 'BLESS');
+
+INSERT INTO tb_users(nome, nivel, invocacao, jogo) VALUES
+('Ren Amamiya', 80, 'MASK', 'PERSONA')

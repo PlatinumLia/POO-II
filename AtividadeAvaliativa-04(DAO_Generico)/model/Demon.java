@@ -1,11 +1,11 @@
-import enums.RacaEnum;
+package model;
+
 import enums.TiposHabilidadesEnum;
 
 public class Demon {
     private Integer id;
     private String nome;
     private int nivel;
-    private RacaEnum raca;
     private TiposHabilidadesEnum fraqueza;
     
     /* Métodos Getters e Setters */
@@ -31,14 +31,6 @@ public class Demon {
     }
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-    
-    // get e set Raça
-    public RacaEnum getRaca() {
-        return raca;
-    }
-    public void setRaca(RacaEnum raca) {
-        this.raca = raca;
     }
     
     // get e set fraqueza
