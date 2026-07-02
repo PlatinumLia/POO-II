@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.GenericDao;
+import enums.TipoInvocacaoEnum;
 import model.User;
 
 public class UserView {
@@ -78,7 +79,77 @@ public class UserView {
     }
 
     public void cadastrar(){
+    System.out.println("=== REGISTRO DE USUÁRIO ===");
 
+        try{
+            User u = new User();
+
+            String nome = "";
+            while(nome.equals("") || nome.length() < 3){
+                System.out.println("| Nome:");
+                nome = scanner.nextLine();
+                
+                if(nome.length() < 3){
+                    System.out.println("O nome não pode ter menos que 3 caracteres e nem ser vazio.");
+                }else{
+                    if(!nome.equals("") || nome.length() >= 3){
+                        u.setNome(nome);
+                    }
+                }
+            }
+            
+            int nivel = -1;
+            while(nivel <= 0 || nivel > 100){
+                System.out.println("| Nível: ");
+                nivel = Integer.parseInt(scanner.nextLine());
+                
+                if(nivel <= 0 || nivel > 100){
+                    System.out.println();
+                    System.out.println("O nível não pode ser menor ou igual a 0 e nem maior que 100.");
+                    System.out.println();
+                }else{
+                    u.setNivel(nivel);
+                }
+            }
+            
+            int identificador = 0;
+            while(identificador < 1 || identificador > 11){
+                System.out.println("=== TIPOS DE INVOCAÇÃO ===\n");
+                System.out.println("| [1]. Evoker.");
+                System.out.println("| [2]. Máscara");
+                System.out.println("| [3]. Carta.");
+                System.out.println("| [4]. Recrutar.");
+                
+                try{
+                    System.out.println("| Invocação:");
+                    identificador = Integer.parseInt(scanner.nextLine());
+                    
+                    if(identificador < 1 || identificador > 11){
+                        System.out.println();
+                        System.out.println("Selecione uma forma de invocação válida.");
+                        System.out.println();
+                    }else{
+                        if(identificador != 0 || identificador <= 11){
+                            TipoInvocacaoEnum ti = TipoInvocacaoEnum.fromIdentificador(identificador);
+                            
+                            u.setTipoInvocacao(ti);
+                        }else{
+                            System.out.println();
+                            System.out.println("A forma de invocação que o usuário utiliza não pode ser vazia.");
+                            System.out.println();
+                        }
+                    }
+                }catch(Exception e){
+                    System.out.println("Erro: " + e.getMessage());
+                }
+            }
+
+            genericDao.inserir(u);
+        }catch(Exception e){
+            System.out.println();
+            System.out.println("Erro: " + e.getMessage());
+            System.out.println();
+        }
     }
 
     public void listar(){
@@ -99,8 +170,7 @@ public class UserView {
                 usr.getId(),
                 usr.getNome(),
                 usr.getNivel(),
-                usr.getInvocacao().getInvocacao(),
-                usr.getJogo().getSerieJogo()
+                usr.getInvocacao().getInvocacaoNome()
             );
         }
     }
@@ -132,8 +202,7 @@ public class UserView {
                     usr.getId(),
                     usr.getNome(),
                     usr.getNivel(),
-                    usr.getInvocacao().getInvocacao(),
-                    usr.getJogo().getSerieJogo()
+                    usr.getInvocacao().getInvocacaoNome()
                 );
             }
         }catch(Exception e){
@@ -160,8 +229,7 @@ public class UserView {
             System.out.println("| ID: " + user.getId());
             System.out.println("| Nome: " + user.getNome());
             System.out.println("| Nível: " + user.getNivel());
-            System.out.println("| Tipo de invocação: " + user.getInvocacao().getInvocacao());
-            System.out.println("| Série-Jogo: " + user.getJogo().getSerieJogo());
+            System.out.println("| Tipo de invocação: " + user.getInvocacao().getInvocacaoNome());
             System.out.println();
         }catch (Exception e){
             System.out.println("Erro: " + e.getMessage());
@@ -169,7 +237,99 @@ public class UserView {
     }
 
     public void alterar(){
+    System.out.println("\n=== ALTERAR REGISTRO ===\n");
 
+        try{
+            System.out.println("Informe o id do demônio registrado:");
+            String filtro = scanner.nextLine();
+
+            User user = genericDao.consultar(User.class, "id", filtro);
+
+            if(user == null){
+                System.out.println("Nenhum demônio encontrado.");
+
+                return;
+            }
+
+            int identificador;
+            do{
+                System.out.println("\n=== DADOS ===\n");
+                System.out.println("| ID: " + user.getId());
+                System.out.println("| [1]. Nome: " + user.getNome());
+                System.out.println("| [2]. Nível: " + user.getNivel());
+                System.out.println("| [3]. Invocação: " + user.getInvocacao().getInvocacaoNome());
+                System.out.println("| [0]. Voltar");
+            
+                try{
+                    System.out.println("Escolha uma opção:");
+                    identificador = Integer.parseInt(scanner.nextLine());
+                }catch(Exception e){
+                    System.out.println("Erro: " + e.getMessage());
+                    identificador = -1;
+                }
+
+                if(identificador < 0 || identificador > 3){
+                    System.out.println("\nInforme um valor válido.");
+                }else{
+                    switch(identificador){
+                        case 1:
+                            System.out.println("| Nome:");
+                            user.setNome(scanner.nextLine());
+                        break;
+
+                        case 2:
+                            System.out.println("| Nível:");
+                            user.setNivel(Integer.parseInt(scanner.nextLine()));
+                        break;
+
+                        case 3:
+                            int identificadorInvocacao;
+
+                            System.out.println("=== TIPOS DE INVOCAÇÃO ===\n");
+                            System.out.println("| [1]. Evoker.");
+                            System.out.println("| [2]. Máscara");
+                            System.out.println("| [3]. Carta.");
+                            System.out.println("| [4]. Recrutar.");
+
+                            do{
+                                try{
+                                    System.out.println("| Fraqueza:");
+                                    identificadorInvocacao = Integer.parseInt(scanner.nextLine());
+    
+                                    TipoInvocacaoEnum ti = TipoInvocacaoEnum.fromIdentificador(identificadorInvocacao);
+                                    user.setTipoInvocacao(ti);
+
+                                    if(identificadorInvocacao < 1 || identificadorInvocacao > 11){
+                                        System.out.println("\nSelecione um valor válido.\n");
+                                    }
+                                }catch(Exception e){
+                                    System.out.println("Erro: " + e.getMessage());
+                                    identificadorInvocacao = -1;
+                                }
+                            }while(identificadorInvocacao < 1 || identificadorInvocacao > 11);
+                        break;
+
+                        case 0:
+                            System.out.println("Voltando . . .");
+                            break;
+
+                        default:
+                            System.out.println("Opção inválida.");
+                            break;
+                    }
+                }
+            }while(identificador != 0);
+
+            int qtde = genericDao.alterar(user, "id", user.getId());
+
+            if(qtde > 0){
+                System.out.println("Alterado com sucesso.");
+            }else{
+                System.out.println("Nenhuma alteração feita.");
+            }
+        }catch(Exception e){
+            System.out.println("Erro: " + e.getMessage());
+        }
     }
 
     public void excluir(){

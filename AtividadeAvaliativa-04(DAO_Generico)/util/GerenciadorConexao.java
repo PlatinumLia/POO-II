@@ -13,17 +13,10 @@ public class GerenciadorConexao {
              mudar os atributos abaixo para poder funcionar nele
         */
         
-        
-        // Pegar conexão com o banco de dados no PC da faculdade
-        // String url = "jdbc:mysql://127.0.0.1/db_compendium";
-        // String user = "root";
-        // String senha = "bancodedados";
-        
-        /* Pegar conexão no meu computador pessoal */
-
+        //Pegar conexão com o banco de dados no PC da faculdade
         String url = "jdbc:mysql://127.0.0.1/db_compendium";
         String user = "root";
-        String passwd = "suseTsuki90@";  
+        String passwd = "bancodedados";
         
         Class.forName("com.mysql.cj.jdbc.Driver");
         conexao = DriverManager.getConnection(url, user, passwd);

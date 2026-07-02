@@ -1,4 +1,4 @@
--- Active: 1778338735100@@127.0.0.1@3306@db_compendium
+-- Active: 1773959692019@@127.0.0.1@3306@db_compendium
 CREATE DATABASE db_compendium;
 
 CREATE TABLE tb_demons(
@@ -14,7 +14,6 @@ CREATE TABLE tb_users(
     nome VARCHAR(80) NOT NULL,
     nivel INT NOT NULL,
     invocacao VARCHAR(80) NOT NULL,
-    jogo VARCHAR(80) NOT NULL,
     PRIMARY KEY(id)
 );
 
@@ -22,5 +21,5 @@ CREATE TABLE tb_users(
 INSERT INTO tb_demons(nome, nivel, fraqueza) VALUES
 ('Arsène', 75, 'BLESS');
 
-INSERT INTO tb_users(nome, nivel, invocacao, jogo) VALUES
-('Ren Amamiya', 80, 'MASK', 'PERSONA')
+INSERT INTO tb_users(nome, nivel, invocacao) VALUES
+('Ren Amamiya', 80, 'MASK')

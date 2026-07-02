@@ -1,6 +1,5 @@
 package model;
 
-import enums.SerieJogosEnum;
 import enums.TipoInvocacaoEnum;
 
 public class User{
@@ -8,7 +7,6 @@ public class User{
     private String nome;
     private int nivel;
     private TipoInvocacaoEnum invocacao;
-    private SerieJogosEnum jogo;
     
     /* Métodos Getters e Setters */
     // get e set ID
@@ -41,13 +39,5 @@ public class User{
     }
     public void setTipoInvocacao(TipoInvocacaoEnum invocacao){
         this.invocacao = invocacao;
-    }
-    
-    // get e set da Série de Jogos que o personagem pertence
-    public SerieJogosEnum getJogo() {
-        return jogo;
-    }
-    public void setSerieJogos(SerieJogosEnum jogo){
-        this.jogo = jogo;
     }
 }
