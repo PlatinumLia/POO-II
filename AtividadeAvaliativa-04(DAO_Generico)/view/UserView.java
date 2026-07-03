@@ -240,13 +240,13 @@ public class UserView {
     System.out.println("\n=== ALTERAR REGISTRO ===\n");
 
         try{
-            System.out.println("Informe o id do demônio registrado:");
+            System.out.println("Informe o id do usuário demoníaco registrado:");
             String filtro = scanner.nextLine();
 
             User user = genericDao.consultar(User.class, "id", filtro);
 
             if(user == null){
-                System.out.println("Nenhum demônio encontrado.");
+                System.out.println("Nenhum usuário demoníaco encontrado.");
 
                 return;
             }
@@ -293,7 +293,7 @@ public class UserView {
 
                             do{
                                 try{
-                                    System.out.println("| Fraqueza:");
+                                    System.out.println("| Invocação:");
                                     identificadorInvocacao = Integer.parseInt(scanner.nextLine());
     
                                     TipoInvocacaoEnum ti = TipoInvocacaoEnum.fromIdentificador(identificadorInvocacao);

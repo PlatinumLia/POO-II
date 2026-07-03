@@ -16,7 +16,7 @@ public class GerenciadorConexao {
         //Pegar conexão com o banco de dados no PC da faculdade
         String url = "jdbc:mysql://127.0.0.1/db_compendium";
         String user = "root";
-        String passwd = "bancodedados";
+        String passwd = "suseTsuki90@";
         
         Class.forName("com.mysql.cj.jdbc.Driver");
         conexao = DriverManager.getConnection(url, user, passwd);

@@ -1,4 +1,4 @@
--- Active: 1773959692019@@127.0.0.1@3306@db_compendium
+-- Active: 1778338735100@@127.0.0.1@3306@db_compendium
 CREATE DATABASE db_compendium;
 
 CREATE TABLE tb_demons(
