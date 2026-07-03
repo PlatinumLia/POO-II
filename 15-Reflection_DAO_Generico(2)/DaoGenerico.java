@@ -43,6 +43,7 @@ public class DaoGenerico {
             String campos = "(";
             String aliases = " VALUES(";
             boolean separar = false;
+
             for (Field f : fields) {
                 if(separar){
                     campos += ", ";
@@ -55,6 +56,7 @@ public class DaoGenerico {
             campos += ")";
             aliases += ");";
             query += campos + aliases;
+
             System.out.println("Query: " + query);
 
             //criar o pst e setar os valores para os ?
@@ -62,6 +64,7 @@ public class DaoGenerico {
             PreparedStatement pst = conn.prepareStatement(
                 query, Statement.RETURN_GENERATED_KEYS
             );
+            
             int numParam = 0;
             for (Field f : fields) {
                 numParam++;

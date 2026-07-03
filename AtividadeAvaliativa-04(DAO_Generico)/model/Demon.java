@@ -3,7 +3,7 @@ package model;
 import enums.TiposHabilidadesEnum;
 
 public class Demon {
-    private Integer id;
+    private int id;
     private String nome;
     private int nivel;
     private TiposHabilidadesEnum fraqueza;

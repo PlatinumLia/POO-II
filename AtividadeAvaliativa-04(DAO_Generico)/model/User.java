@@ -3,7 +3,7 @@ package model;
 import enums.TipoInvocacaoEnum;
 
 public class User{
-    private Integer id;
+    private int id;
     private String nome;
     private int nivel;
     private TipoInvocacaoEnum invocacao;
