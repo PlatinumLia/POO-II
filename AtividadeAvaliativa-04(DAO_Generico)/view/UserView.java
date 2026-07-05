@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.GenericDao;
+import enums.SerieJogosEnum;
 import enums.TipoInvocacaoEnum;
 import model.User;
 
@@ -79,7 +80,7 @@ public class UserView {
     }
 
     public void cadastrar(){
-    System.out.println("=== REGISTRO DE USUÁRIO ===");
+    System.out.println("\n=== REGISTRO DE USUÁRIO ===");
 
         try{
             User u = new User();
@@ -112,8 +113,8 @@ public class UserView {
                 }
             }
             
-            int identificador = 0;
-            while(identificador < 1 || identificador > 11){
+            int invocacao = 0;
+            while(invocacao < 1 || invocacao > 4){
                 System.out.println("=== TIPOS DE INVOCAÇÃO ===\n");
                 System.out.println("| [1]. Evoker.");
                 System.out.println("| [2]. Máscara");
@@ -121,21 +122,54 @@ public class UserView {
                 System.out.println("| [4]. Recrutar.");
                 
                 try{
-                    System.out.println("| Invocação:");
-                    identificador = Integer.parseInt(scanner.nextLine());
+                    System.out.println("\n| Invocação:");
+                    invocacao = Integer.parseInt(scanner.nextLine());
                     
-                    if(identificador < 1 || identificador > 11){
+                    if(invocacao < 1 || invocacao > 4){
                         System.out.println();
                         System.out.println("Selecione uma forma de invocação válida.");
                         System.out.println();
                     }else{
-                        if(identificador != 0 || identificador <= 11){
-                            TipoInvocacaoEnum ti = TipoInvocacaoEnum.fromIdentificador(identificador);
+                        if(invocacao != 0 || invocacao <= 4){
+                            TipoInvocacaoEnum ti = TipoInvocacaoEnum.fromIdentificador(invocacao);
                             
                             u.setTipoInvocacao(ti);
                         }else{
                             System.out.println();
                             System.out.println("A forma de invocação que o usuário utiliza não pode ser vazia.");
+                            System.out.println();
+                        }
+                    }
+                }catch(Exception e){
+                    System.out.println("Erro: " + e.getMessage());
+                }
+            }
+
+            int jogo = 0;
+            while(jogo < 1 || jogo > 5){
+                System.out.println("\n=== JOGOS CATALOGADOS ===\n");
+                System.out.println("| [1]. Shin Megami Tensei.");
+                System.out.println("| [2]. Persona");
+                System.out.println("| [3]. Devil Survivors.");
+                System.out.println("| [4]. Digital Devil Saga.");
+                System.out.println("| [5]. Devil Summoner.");
+                
+                try{
+                    System.out.println("\n| Jogo:");
+                    jogo = Integer.parseInt(scanner.nextLine());
+                    
+                    if(jogo < 1 || jogo > 11){
+                        System.out.println();
+                        System.out.println("Selecione uma forma de invocação válida.");
+                        System.out.println();
+                    }else{
+                        if(jogo != 0 || jogo <= 5){
+                            SerieJogosEnum sj = SerieJogosEnum.fromIdentificador(jogo);
+                            
+                            u.setJogo(sj);;
+                        }else{
+                            System.out.println();
+                            System.out.println("O jogo que o usuário demoníaco faz parte não pode ser vazio.");
                             System.out.println();
                         }
                     }
@@ -163,20 +197,20 @@ public class UserView {
             return;
         }
 
-        System.out.printf("| %-5s | %-20s | %-20s | %-20s\n", "ID", "NOME", "NÍVEL", "INVOCAÇÃO", "JOGO");
+        System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n", "ID", "NOME", "NÍVEL", "INVOCAÇÃO", "JOGO");
 
         for(User usr : users){
-            System.out.printf("| %-5d | %-20s | %-20s | %-20s\n",
+            System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n",
                 usr.getId(),
                 usr.getNome(),
                 usr.getNivel(),
-                usr.getInvocacao().getInvocacaoNome()
-            );
+                usr.getInvocacao().getInvocacaoNome(),
+                usr.getJogo().getSerieJogo());
         }
     }
 
     public void listarPorFiltro(){
-        System.out.println("=== BUSCAR POR FILTRO ===\n");
+        System.out.println("\n=== BUSCAR POR FILTRO ===\n");
 
         try{
             String campo = "";
@@ -196,13 +230,14 @@ public class UserView {
                 return;
             }
     
-            System.out.printf("| %-5s | %-20s | %-20s | %-15s\n", "ID", "NOME", "NÍVEL", "FRAQUEZA");
+            System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n", "ID", "NOME", "NÍVEL", "INVOCAÇÃO", "JOGO");
             for(User usr : users){
-                System.out.printf("| %-5s | %-20s | %-20s | %-15s\n", 
+                System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n", 
                     usr.getId(),
                     usr.getNome(),
                     usr.getNivel(),
-                    usr.getInvocacao().getInvocacaoNome()
+                    usr.getInvocacao().getInvocacaoNome(),
+                    usr.getJogo().getSerieJogo()
                 );
             }
         }catch(Exception e){
@@ -230,6 +265,7 @@ public class UserView {
             System.out.println("| Nome: " + user.getNome());
             System.out.println("| Nível: " + user.getNivel());
             System.out.println("| Tipo de invocação: " + user.getInvocacao().getInvocacaoNome());
+            System.out.println("| Jogo: " + user.getJogo().getSerieJogo());
             System.out.println();
         }catch (Exception e){
             System.out.println("Erro: " + e.getMessage());
@@ -258,6 +294,7 @@ public class UserView {
                 System.out.println("| [1]. Nome: " + user.getNome());
                 System.out.println("| [2]. Nível: " + user.getNivel());
                 System.out.println("| [3]. Invocação: " + user.getInvocacao().getInvocacaoNome());
+                System.out.println("| [4]. Invocação: " + user.getJogo().getSerieJogo());
                 System.out.println("| [0]. Voltar");
             
                 try{
@@ -307,6 +344,34 @@ public class UserView {
                                     identificadorInvocacao = -1;
                                 }
                             }while(identificadorInvocacao < 1 || identificadorInvocacao > 11);
+                        break;
+
+                        case 4:
+                            int idenficadorJogo = 0;
+
+                            System.out.println("=== JOGOS CATALOGADOS ===\n");
+                            System.out.println("| [1]. Shin Megami Tensei.");
+                            System.out.println("| [2]. Persona");
+                            System.out.println("| [3]. Devil Survivors.");
+                            System.out.println("| [4]. Digital Devil Saga.");
+                            System.out.println("| [5]. Devil Summoner.");
+
+                            do{
+                                try{
+                                    System.out.println("\n| Jogo:");
+                                    idenficadorJogo = Integer.parseInt(scanner.nextLine());
+    
+                                    SerieJogosEnum sj = SerieJogosEnum.fromIdentificador(idenficadorJogo);
+                                    user.setJogo(sj);
+
+                                    if(idenficadorJogo < 1 || idenficadorJogo > 5){
+                                        System.out.println("\nSelecione um valor válido.\n");
+                                    }
+                                }catch(Exception e){
+                                    System.out.println("Erro: " + e.getMessage());
+                                    identificadorInvocacao = -1;
+                                }
+                            }while(idenficadorJogo < 1 || idenficadorJogo > 5);
                         break;
 
                         case 0:

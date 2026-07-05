@@ -6,6 +6,7 @@ CREATE TABLE tb_demons(
     nome VARCHAR(80) NOT NULL,
     nivel INT NOT NULL,
     fraqueza VARCHAR(80) NOT NULL,
+    raca VARCHAR(80) NOT NULL, 
     PRIMARY KEY(id)
 );
 
@@ -14,12 +15,13 @@ CREATE TABLE tb_users(
     nome VARCHAR(80) NOT NULL,
     nivel INT NOT NULL,
     invocacao VARCHAR(80) NOT NULL,
+    jogo VARCHAR(80) NOT NULL,
     PRIMARY KEY(id)
 );
 
 /* Insert's para teste*/
-INSERT INTO tb_demons(nome, nivel, fraqueza) VALUES
-('Arsène', 75, 'BLESS');
+INSERT INTO tb_demons(nome, nivel, fraqueza, raca) VALUES
+('Arsène', 75, 'BLESS', 'DEVIL');
 
-INSERT INTO tb_users(nome, nivel, invocacao) VALUES
-('Ren Amamiya', 80, 'MASK')
+INSERT INTO tb_users(nome, nivel, invocacao, jogo) VALUES
+('Ren Amamiya', 80, 'MASK', 'PERSONA')

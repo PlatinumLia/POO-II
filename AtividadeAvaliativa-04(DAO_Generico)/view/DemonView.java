@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.GenericDao;
+import enums.RacaEnum;
 import enums.TiposHabilidadesEnum;
 import model.Demon;
 
@@ -114,8 +115,8 @@ public class DemonView {
                 }
             }
             
-            int identificador = 0;
-            while(identificador < 1 || identificador > 11){
+            int elemento = 0;
+            while(elemento < 1 || elemento > 11){
                 System.out.println("=== TIPOS ELEMENTAIS ===\n");
                 System.out.println("| [1]. Phsyical.");
                 System.out.println("| [2]. Gun.");
@@ -131,20 +132,65 @@ public class DemonView {
                 
                 try{
                     System.out.println("| Fraqueza:");
-                    identificador = Integer.parseInt(scanner.nextLine());
+                    elemento = Integer.parseInt(scanner.nextLine());
                     
-                    if(identificador < 1 || identificador > 11){
+                    if(elemento < 1 || elemento > 11){
                         System.out.println();
                         System.out.println("Selecione um tipo elemental válido.");
                         System.out.println();
                     }else{
-                        if(identificador != 0 || identificador <= 11){
-                            TiposHabilidadesEnum th = TiposHabilidadesEnum.fromIdentificador(identificador);
+                        if(elemento != 0 || elemento <= 11){
+                            TiposHabilidadesEnum th = TiposHabilidadesEnum.fromIdentificador(elemento);
                             
                             d.setFraqueza(th);
                         }else{
                             System.out.println();
                             System.out.println("A fraqueza elemental do demônio não pode ser vazia.");
+                            System.out.println();
+                        }
+                    }
+                }catch(Exception e){
+                    System.out.println("Erro: " + e.getMessage());
+                }
+            }
+
+            int raca = 0;
+            while(raca < 1 || raca > 17){
+                System.out.println("=== RAÇAS CATALOGADAS ===\n");
+                System.out.println("| [1]. Akuma.");
+                System.out.println("| [2]. Beast.");
+                System.out.println("| [3]. Brute.");
+                System.out.println("| [4]. Deity.");
+                System.out.println("| [5]. Devil.");
+                System.out.println("| [6]. Divine.");
+                System.out.println("| [7]. Dragon.");
+                System.out.println("| [8]. Fairy");
+                System.out.println("| [9]. Femme.");
+                System.out.println("| [10]. Fiend.");
+                System.out.println("| [11]. Lady.");
+                System.out.println("| [12]. Megami.");
+                System.out.println("| [13]. Mitama.");
+                System.out.println("| [14]. Tryrant.");
+                System.out.println("| [15]. Wargod.");
+                System.out.println("| [16]. Yoma.");
+                System.out.println("| [17]. Zealot.");
+                
+                try{
+                    System.out.println("\n| Raça:");
+                    raca = Integer.parseInt(scanner.nextLine());
+                    
+                    if(raca < 1 || raca > 17){
+                        System.out.println();
+                        System.out.println("Selecione uma raça válida.");
+                        System.out.println();
+                    }else{
+                        if(raca != 0 || raca <= 17){
+                            RacaEnum r = RacaEnum.fromIdentificador(raca);
+                            
+                            d.setRaca(r);
+                        }else{
+                            System.out.println();
+                            System.out.println("A raça do demônio não pode ser vazia.");
                             System.out.println();
                         }
                     }
@@ -172,14 +218,16 @@ public class DemonView {
             return;
         }
 
-        System.out.printf("| %-5s | %-20s | %-20s | %-20s\n", "ID", "NOME", "NÍVEL", "FRAQUEZA");
+        System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n", "ID", "NOME", "NÍVEL", "FRAQUEZA", "RAÇA");
 
         for(Demon d : demons){
-            System.out.printf("| %-5d | %-20s | %-20s | %-20s\n",
-            d.getId(),
-            d.getNome(),
-            d.getNivel(),
-            d.getFraqueza().getHabilidade());
+            System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n",
+                d.getId(),
+                d.getNome(),
+                d.getNivel(),
+                d.getFraqueza().getHabilidade(),
+                d.getRaca().getRaca()
+            );
         }
     }
 
@@ -205,14 +253,14 @@ public class DemonView {
                 return;
             }
     
-            System.out.printf("| %-5s | %-20s | %-20s | %-15s\n", "ID", "NOME", "NÍVEL", "FRAQUEZA");
+            System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n", "ID", "NOME", "NÍVEL", "FRAQUEZA", "RAÇA");
             for(Demon d : demons){
-                System.out.printf("| %-5s | %-20s | %-20s | %-15s\n", 
-                    d.getId(),
-                    d.getNome(),
-                    d.getNivel(),
-                    d.getFraqueza().getHabilidade()
-                );
+                System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-20s\n",
+                d.getId(), 
+                d.getNome(), 
+                d.getNivel(), 
+                d.getFraqueza().getHabilidade(), 
+                d.getRaca().getRaca());
             }
         }catch(Exception e){
             System.out.println("Erro: " + e.getMessage());
@@ -239,6 +287,7 @@ public class DemonView {
             System.out.println("Nome: " + demons.getNome());
             System.out.println("Nível: " + demons.getNivel());
             System.out.println("Fraqueza: " + demons.getFraqueza().getHabilidade());
+            System.out.println("Raça: " + demons.getRaca().getRaca());
         }catch(Exception e){
             System.out.println("Erro: " + e.getMessage());
         }
@@ -266,6 +315,7 @@ public class DemonView {
                 System.out.println("| [1]. Nome: " + demon.getNome());
                 System.out.println("| [2]. Nível: " + demon.getNivel());
                 System.out.println("| [3]. Fraqueza: " + demon.getFraqueza().getHabilidade());
+                System.out.println("| [4]. Fraqueza: " + demon.getRaca().getRaca());
                 System.out.println("| [0]. Voltar");
             
                 try{
@@ -322,6 +372,46 @@ public class DemonView {
                                     identificadorFraqueza = -1;
                                 }
                             }while(identificadorFraqueza < 1 || identificadorFraqueza > 11);
+                        break;
+                            
+                        case 4:
+                            int identificadorRaca;
+
+                            System.out.println("=== RAÇAS CATALOGADAS ===\n");
+                            System.out.println("| [1]. Akuma.");
+                            System.out.println("| [2]. Beast.");
+                            System.out.println("| [3]. Brute.");
+                            System.out.println("| [4]. Deity.");
+                            System.out.println("| [5]. Devil.");
+                            System.out.println("| [6]. Divine.");
+                            System.out.println("| [7]. Dragon.");
+                            System.out.println("| [8]. Fairy");
+                            System.out.println("| [9]. Femme.");
+                            System.out.println("| [10]. Fiend.");
+                            System.out.println("| [11]. Lady.");
+                            System.out.println("| [12]. Megami.");
+                            System.out.println("| [13]. Mitama.");
+                            System.out.println("| [14]. Tryrant.");
+                            System.out.println("| [15]. Wargod.");
+                            System.out.println("| [16]. Yoma.");
+                            System.out.println("| [17]. Zealot.");
+
+                            do{
+                                try{
+                                    System.out.println("\n| Raça:");
+                                    identificadorRaca = Integer.parseInt(scanner.nextLine());
+    
+                                    RacaEnum r = RacaEnum.fromIdentificador(identificadorRaca);
+                                    demon.setRaca(r);
+
+                                    if(identificadorRaca < 1 || identificadorRaca > 11){
+                                        System.out.println("\nSelecione um valor válido.\n");
+                                    }
+                                }catch(Exception e){
+                                    System.out.println("Erro: " + e.getMessage());
+                                    identificadorRaca = -1;
+                                }
+                            }while(identificadorRaca < 1 || identificadorRaca > 17);
                         break;
 
                         case 0:

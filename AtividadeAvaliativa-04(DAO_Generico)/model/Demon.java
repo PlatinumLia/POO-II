@@ -1,5 +1,6 @@
 package model;
 
+import enums.RacaEnum;
 import enums.TiposHabilidadesEnum;
 
 public class Demon {
@@ -7,13 +8,14 @@ public class Demon {
     private String nome;
     private int nivel;
     private TiposHabilidadesEnum fraqueza;
+    private RacaEnum raca;
     
     /* Métodos Getters e Setters */
     // get e set ID
-    public Integer getId() {
+    public int getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,5 +41,13 @@ public class Demon {
     }
     public void setFraqueza(TiposHabilidadesEnum fraqueza) {
         this.fraqueza = fraqueza;
-    }   
+    }
+
+    // get e set raça
+    public RacaEnum getRaca() {
+        return raca;
+    }
+    public void setRaca(RacaEnum raca) {
+        this.raca = raca;
+    }
 }
